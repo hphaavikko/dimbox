@@ -1,0 +1,29 @@
+{
+  "name": "dimbox",
+  "version": "1.0.0",
+  "description": "Lightweight and dependency free JavaScript library for displaying images, videos and other content on a web page.",
+  "main": "src/js/dimbox.js",
+  "scripts": {
+    "sass": "sass src/scss/dimbox.scss dist/css/dimbox.min.css --style compressed",
+    "uglify": "uglifyjs src/js/dimbox.js --output dist/js/dimbox.min.js",
+    "build": "npm-run-all --parallel sass uglify",
+    "watch": "watch 'npm run build' src --interval 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vanilla",
+    "dimbox",
+    "lightbox",
+    "image",
+    "gallery",
+    "overlay"
+  ],
+  "author": "Hape Haavikko",
+  "license": "ISC",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.57.1",
+    "uglify-js": "^3.17.4",
+    "watch": "^1.0.2"
+  }
+}
