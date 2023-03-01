@@ -6,7 +6,7 @@ Lightweight and dependency free JavaScript library for displaying images, videos
 
 ### Documentation
 
-Documentation and examples at [dimboxjs.com](https://dimboxjs.com).
+Documentation and examples coming soon...
 
 ## Authors
 
