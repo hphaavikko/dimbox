@@ -1,6 +1,6 @@
 {
   "name": "dimbox",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lightweight and dependency free JavaScript library for displaying images, videos and other content on a web page.",
   "main": "src/js/dimbox.js",
   "scripts": {
@@ -19,6 +19,10 @@
     "overlay"
   ],
   "author": "Hape Haavikko",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hphaavikko/dimbox.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "npm-run-all": "^4.1.5",
