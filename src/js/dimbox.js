@@ -715,6 +715,7 @@ const dimbox = (function() {
     
     // Reveal public pointers to private functions and properties
     return {
+        init: init,
         close: close,
         next: next,
         open: open,
