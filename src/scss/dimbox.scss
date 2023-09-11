@@ -49,6 +49,13 @@ $overlay-opacity: .75 !default;
     background-color: $overlay-color-light;
 }
 
+.dimbox-container *:active,
+.dimbox-container *:focus,
+.dimbox-container *:focus-visible {
+    outline-style: dotted;
+    outline-offset: 4px;
+}
+
 .dimbox-loader {
     position: fixed;
     top: 50%;

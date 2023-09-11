@@ -2,7 +2,7 @@
  * DimBox - Lightweight and dependency free JavaScript library for displaying images, videos and other content on a web page.
  * https://github.com/hphaavikko/dimbox
  * 
- * @version 1.0.0
+ * @version 1.0.3
  * @author  Hape Haavikko <hape.haavikko@fakiirimedia.com>
  * @licence ISC
  */
@@ -82,6 +82,9 @@ const dimbox = (function() {
     let thisGalleryLinks;
     let currentEl;
     let currentType;
+    let focusableEls;
+    let prevFocusedElement;
+    let currentFocus;
     let touchStartX;
     let touchStartY;
     let touchEndX;
@@ -114,6 +117,7 @@ const dimbox = (function() {
 
     /**
      * Opens the box.
+     * 
      * @param   {HTMLElement}    el 
      */
     function open(el) {
@@ -174,6 +178,27 @@ const dimbox = (function() {
         dimboxContainer.addEventListener('click', onOverlayClick);
         document.body.appendChild(dimboxContainer);
 
+        // Get focusable elements in DimBox container
+        focusableEls = Array.from(
+            dimboxContainer.querySelectorAll(
+              'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
+            )
+        );
+
+        // Get the currently focused element
+        prevFocusedElement = document.activeElement;
+        
+        // Add elements with tabIndex 0 to start and end of the trap
+        let focusTrapDivStart = document.createElement('div');
+        let focusTrapDivEnd = document.createElement('div');
+        focusTrapDivStart.tabIndex = '0';
+        focusTrapDivEnd.tabIndex = '0';
+        dimboxContainer.prepend(focusTrapDivStart);
+        dimboxContainer.append(focusTrapDivEnd);
+        
+        // Trap focus inside dimboxContainer on focus change
+        document.addEventListener('focus', trapFocus, true);
+
         setTimeout(function() {
             dimboxContainer.classList.add('show');
             // Check if there is a vertical scrollbar and prevent page scrolling under DimBox if needed
@@ -188,6 +213,33 @@ const dimbox = (function() {
             }
             executeCallback('onAfterOpen');
         }, 50);
+    }
+
+    /**
+     * Traps focus inside dimboxContainer when DimBox is open.
+     * 
+     * @param   {FocusEvent}    e
+     */
+    function trapFocus(e) {
+        e.preventDefault();
+        
+        let firstFocusableEl = focusableEls[0];
+        let lastFocusableEl = focusableEls[focusableEls.length - 1];
+
+        // Focus element if it is inside dimboxContainer
+        if (focusableEls.indexOf(e.target) !== -1) {
+            currentFocus = e.target;
+        } else {
+            // We're out of dimboxContainer
+            // If previously focused element was the first element then focus the last 
+            if (currentFocus === firstFocusableEl) {
+                lastFocusableEl.focus();
+            } else {
+                // If previously focused element was the last focus the first one
+                firstFocusableEl.focus();
+            }
+            currentFocus = document.activeElement;
+        }
     }
 
     /**
@@ -602,7 +654,7 @@ const dimbox = (function() {
     }
 
     /**
-     * Closes FigureBox by removing the container element from the DOM.
+     * Closes DimBox by removing the container element from the DOM.
      */
     function close() {
         executeCallback('onBeforeClose');
@@ -617,6 +669,9 @@ const dimbox = (function() {
             document.documentElement.classList.remove('dimbox-noscroll');
             // Remove documentElement extra padding
             document.documentElement.style.paddingRight = '';
+            // Remove focus trap and focus the previously active element
+            document.removeEventListener('focus', trapFocus, true);
+            prevFocusedElement.focus();
             executeCallback('onAfterClose');
         }, 500);
     }
