@@ -671,7 +671,7 @@ const dimbox = (function() {
             document.documentElement.style.paddingRight = '';
             // Remove focus trap and focus the previously active element
             document.removeEventListener('focus', trapFocus, true);
-            prevFocusedElement.focus();
+            prevFocusedElement.focus({ preventScroll: true });
             executeCallback('onAfterClose');
         }, 500);
     }
