@@ -1,10 +1,14 @@
 # Change Log
-This is the changelog for [DimBox](https://xxxxx).
+This is the changelog for [DimBox](https://dimboxjs.com).
 
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## [1.0.5] - 2024-06-30
+### Added
+- Support for downloading files from a different domain (Access-Control-Allow-Origin header needs to be set on the remote server).
 
 ## [1.0.4] - 2024-06-22
 ### Added

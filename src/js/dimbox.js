@@ -2,7 +2,7 @@
  * DimBox - Lightweight and dependency free JavaScript library for displaying images, videos and other content on a web page.
  * https://github.com/hphaavikko/dimbox
  * 
- * @version 1.0.3
+ * @version 1.0.5
  * @author  Hape Haavikko <hape.haavikko@fakiirimedia.com>
  * @licence ISC
  */
@@ -376,11 +376,47 @@ const dimbox = (function() {
             downloadBtn.href = currentEl.href;
             downloadBtn.target = '_blank';
             downloadBtn.setAttribute('download', '');
-            downloadBtn.addEventListener('click', function() {
+            downloadBtn.addEventListener('click', function(e) {
+                if (! currentEl.href.includes(window.location.hostname) && ! currentEl.dataset.dimboxDownloadFailed) {
+                    // The image is in a different domain
+                    e.preventDefault();
+                    downloadRemoteImage();
+                }
                 executeCallback('onDownload');
             });
+
             dimboxContainer.appendChild(downloadBtn);
         }
+    }
+
+    /**
+     * Starts remote image download if CORS policy allows.
+     * If not, the image is opened in a new tab. 
+     */
+    function downloadRemoteImage() {
+        let url = currentEl.href;
+        let fileName = url.match(/([^\/]+)$/)[1];
+        fetch(url)
+            .then(function(response) {
+                return response.blob();
+            })
+            .then(function(blob) {
+                let url = window.URL.createObjectURL(blob);
+                let a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            })
+            .catch(function(error) {
+                console.error('Downloading image failed probably due to CORS policy, opening the image in a new tab');
+                console.error('Error', error);
+                currentEl.dataset.dimboxDownloadFailed = 'true';
+                downloadBtn.click();
+            });
     }
 
     /**
