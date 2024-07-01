@@ -266,6 +266,10 @@ $overlay-opacity: .75 !default;
     overflow: hidden !important;
 }
 
+.dimbox-error {
+    position: relative;
+}
+
 @media (orientation: portrait) {
     .dimbox-container {
         padding: 56px 16px;

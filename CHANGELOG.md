@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.6] - 2024-07-01
+### Added
+- Error message on XHR error when loading ajax content.
+
 ## [1.0.5] - 2024-06-30
 ### Added
 - Support for downloading files from a different domain (Access-Control-Allow-Origin header needs to be set on the remote server).

@@ -643,6 +643,12 @@ const dimbox = (function() {
      * 
      */
     function xhrError() {
+        let errorDiv = document.createElement('div');
+        errorDiv.className = 'dimbox-error';
+        errorDiv.textContent = 'Remote content could not be loaded.'
+        dimboxContent.innerHTML = '';
+        dimboxContent.append(errorDiv);
+        dimboxContainer.classList.add('dimbox-loaded');
         console.error('Error completing XHR request');
     }
 
