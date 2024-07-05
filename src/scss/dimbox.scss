@@ -97,15 +97,30 @@ $overlay-opacity: .75 !default;
     color: #000;
 }
 
-.dimbox-btn-close {
+.dimbox-buttons {
+    position: absolute;
     top: 16px;
     right: 16px;
+    display: flex;
+}
+
+.dimbox-buttons [class^="dimbox-btn"] {
+    position: static;
+    margin: 0 8px;
 }
 
 .dimbox-btn-download {
-    top: 16px;
-    right: 64px;
+    order: 1;
 }
+
+.dimbox-btn-fullscreen {
+    order: 2;
+}
+
+.dimbox-btn-close {
+    order: 3;
+}
+
 
 [class^="dimbox-btn"]:hover,
 [class^="dimbox-btn"]:active,

@@ -2,7 +2,7 @@
  * DimBox - Lightweight and dependency free JavaScript library for displaying images, videos and other content on a web page.
  * https://github.com/hphaavikko/dimbox
  * 
- * @version 1.0.5
+ * @version 1.1.0
  * @author  Hape Haavikko <hape.haavikko@fakiirimedia.com>
  * @licence ISC
  */
@@ -18,6 +18,7 @@ const dimbox = (function() {
             </div>
         `,
         closeOnOverlayClick: true,
+        fullscreen: false,
         imageTemplate: `
         <figure class="dimbox-figure">
             <img src="{{src}}" class="dimbox-image" alt="{{alt}}" />
@@ -37,10 +38,14 @@ const dimbox = (function() {
         </div>
         `,
         onAfterClose: null,
+        onAfterEnterFullscreen: null,
+        onAfterExitFullscreen: null,
         onAfterInit: null,
         onAfterOpen: null,
         onAfterUpdateContent: null,
         onBeforeClose: null,
+        onBeforeEnterFullscreen: null,
+        onBeforeExitFullscreen: null,
         onBeforeInit: null,
         onBeforeOpen: null,
         onBeforeUpdateContent: null,
@@ -50,8 +55,11 @@ const dimbox = (function() {
         selector: 'a[data-dimbox]',
         sequenceTemplate: '<span class="dimbox-sequence-current">{{current}}</span> / <span class="dimbox-sequence-total">{{total}}</span>',
         showDownloadButton: true,
+        showFullscreenButton: true,
         svgCloseButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/></svg>',
         svgDownloadButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>',
+        svgFullscreenButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5"/></svg>',
+        svgFullscreenExitButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5.5 0a.5.5 0 0 1 .5.5v4A1.5 1.5 0 0 1 4.5 6h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5m5 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 10 4.5v-4a.5.5 0 0 1 .5-.5M0 10.5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 6 11.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5m10 1a1.5 1.5 0 0 1 1.5-1.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0z"/></svg>',
         svgPrevNextButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>',
         theme: 'dark',
         videoAutoplay: true,
@@ -76,9 +84,11 @@ const dimbox = (function() {
     let dimboxElements;
     let dimboxContainer;
     let dimboxContent;
+    let dimboxButtons;
     let loader;
     let closeBtn;
     let downloadBtn;
+    let fullscreenBtn;
     let thisGalleryLinks;
     let currentEl;
     let currentType;
@@ -103,7 +113,12 @@ const dimbox = (function() {
         for (let i = 0; i < dimboxElements.length; i++) {
             dimboxElements[i].addEventListener('click', onLinkClick);
         }
-    
+        
+        // Add fullscreen change listener if fullscreen is enabled
+        if (config.showFullscreenButton) {
+            window.addEventListener('fullscreenchange', fullscreenChangeHandler);
+        }
+
         executeCallback('onAfterInit');
     }
 
@@ -135,6 +150,10 @@ const dimbox = (function() {
         dimboxContainer = document.createElement('div');
         dimboxContent = document.createElement('div');
         loader = document.createElement('div');
+
+        dimboxButtons = document.createElement('div');
+        dimboxButtons.className = 'dimbox-buttons';
+
         closeBtn = document.createElement('button');
 
         dimboxContainer.className = 'dimbox-container';
@@ -171,7 +190,20 @@ const dimbox = (function() {
         }
 
         dimboxContainer.appendChild(loader);
-        dimboxContainer.appendChild(closeBtn);
+
+        // Create fullscreen button if needed
+        if (config.showFullscreenButton) {
+            fullscreenBtn = document.createElement('button');
+            fullscreenBtn.className = 'dimbox-btn-fullscreen';
+            fullscreenBtn.innerHTML = config.svgFullscreenButton;
+            fullscreenBtn.addEventListener('click', toggleFullscreen);
+            dimboxButtons.appendChild(fullscreenBtn);
+        }
+
+        //dimboxContainer.appendChild(closeBtn);
+        dimboxButtons.appendChild(closeBtn);
+
+        dimboxContainer.appendChild(dimboxButtons);
         dimboxContainer.appendChild(dimboxContent);
         
         closeBtn.addEventListener('click', close);
@@ -201,6 +233,11 @@ const dimbox = (function() {
 
         setTimeout(function() {
             dimboxContainer.classList.add('show');
+            // Go fullscreen if set
+            if (config.fullscreen && ! document.fullscreenElement) {
+                executeCallback('onBeforeEnterFullscreen');
+                document.documentElement.requestFullscreen();
+            }
             // Check if there is a vertical scrollbar and prevent page scrolling under DimBox if needed
             if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
                 let scrollW = window.innerWidth - document.body.clientWidth;
@@ -365,7 +402,8 @@ const dimbox = (function() {
             // Current type is not image or video...
             if (currentType !== 'image' && currentType !== 'video') {
                 // ...so remove download button from the DOM
-                dimboxContainer.removeChild(downloadBtn);
+                //dimboxContainer.removeChild(downloadBtn);
+                dimboxButtons.removeChild(downloadBtn);
                 downloadBtn = null;
             }
         } else if (currentType === 'image' || currentType === 'video') {
@@ -385,7 +423,8 @@ const dimbox = (function() {
                 executeCallback('onDownload');
             });
 
-            dimboxContainer.appendChild(downloadBtn);
+            //dimboxContainer.appendChild(downloadBtn);
+            dimboxButtons.appendChild(downloadBtn);
         }
     }
 
@@ -418,6 +457,36 @@ const dimbox = (function() {
                 downloadBtn.click();
             });
     }
+    /**
+     * 
+     */
+    function toggleFullscreen() {
+		if (document.fullscreenElement) {
+            executeCallback('onBeforeExitFullscreen');
+			document.exitFullscreen();
+		} else {
+            executeCallback('onBeforeEnterFullscreen');
+            document.documentElement.requestFullscreen();
+		}
+        fullscreenBtn.blur();
+	}
+
+    /**
+     * 
+     */
+	function fullscreenChangeHandler() {
+		if (document.fullscreenElement) {
+            if (fullscreenBtn) {
+                fullscreenBtn.innerHTML = config.svgFullscreenExitButton;
+            }
+            executeCallback('onAfterEnterFullscreen');
+		} else {
+            if (fullscreenBtn) {
+                fullscreenBtn.innerHTML = config.svgFullscreenButton;
+            }
+            executeCallback('onAfterExitFullscreen');
+        }
+	}
 
     /**
      * @param   {string}    contentHtml 
@@ -704,6 +773,11 @@ const dimbox = (function() {
         window.removeEventListener('touchstart', onTouchStart);
         window.removeEventListener('touchend', onTouchEnd);
         dimboxContainer.classList.remove('show');
+        // Exit fullscreen if needed
+        if (document.fullscreenElement) {
+            executeCallback('onBeforeExitFullscreen');
+            document.exitFullscreen();
+        }
         // Wait for the fade out transition to end
         setTimeout(function() {
             document.body.removeChild(dimboxContainer);

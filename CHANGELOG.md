@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.0] - 2024-07-05
+### Added
+- Fullscreen functionality.
+- Event hooks onAfterEnterFullscreen, onAfterExitFullscreen, onBeforeEnterFullscreen and onBeforeExitFullscreen.
+- Config options fullscreen, showFullscreenButton, svgFullscreenButton and svgFullscreenExitButton.
+
 ## [1.0.6] - 2024-07-01
 ### Added
 - Error message on XHR error when loading ajax content.
