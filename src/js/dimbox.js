@@ -173,6 +173,7 @@ const dimbox = (function() {
         closeBtn.innerHTML = config.svgCloseButton;
 
         updateContent();
+        window.addEventListener('keydown', handleEscPress);
 
         // Set up gallery stuff
         if (currentEl.dataset.dimbox !== '') {
@@ -182,7 +183,7 @@ const dimbox = (function() {
             if (galleryLinks.length > 1) {
                 createPrevNextButtons(currentEl.dataset.dimbox);
                 createSequence();
-                window.addEventListener('keydown', onKeyPress);
+                window.addEventListener('keydown', handleArrowsPress);
                 window.addEventListener('touchstart', onTouchStart);
                 window.addEventListener('touchend', onTouchEnd);
                 dimboxContainer.classList.add('dimbox-gallery');
@@ -618,7 +619,7 @@ const dimbox = (function() {
     /**
      * @param   {KeyboardEvent}    e 
      */
-    function onKeyPress(e) {
+    function handleArrowsPress(e) {
         switch (e.key) {
             case "ArrowLeft":
                 previous();
@@ -626,6 +627,14 @@ const dimbox = (function() {
             case "ArrowRight":
                 next();
                 break;
+        }
+    }
+
+    /**
+     * @param   {KeyboardEvent}    e 
+     */
+    function handleEscPress(e) {
+        switch (e.key) {
             case "Escape":
                 if (! document.fullscreenElement) {
                     close();
@@ -774,7 +783,8 @@ const dimbox = (function() {
      */
     function close() {
         executeCallback('onBeforeClose');
-        window.removeEventListener('keydown', onKeyPress);
+        window.removeEventListener('keydown', handleEscPress);
+        window.removeEventListener('keydown', handleArrowsPress);
         window.removeEventListener('touchstart', onTouchStart);
         window.removeEventListener('touchend', onTouchEnd);
         dimboxContainer.classList.remove('show');
