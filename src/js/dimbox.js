@@ -626,6 +626,11 @@ const dimbox = (function() {
             case "ArrowRight":
                 next();
                 break;
+            case "Escape":
+                if (! document.fullscreenElement) {
+                    close();
+                }
+                break;
         }
     }
 
