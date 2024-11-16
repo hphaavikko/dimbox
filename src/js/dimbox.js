@@ -2,7 +2,7 @@
  * DimBox - Lightweight and dependency free JavaScript library for displaying images, videos and other content on a web page.
  * https://github.com/hphaavikko/dimbox
  * 
- * @version 1.1.0
+ * @version 1.1.3
  * @author  Hape Haavikko <hape.haavikko@fakiirimedia.com>
  * @licence ISC
  */
@@ -401,40 +401,48 @@ const dimbox = (function() {
             // Update href right away
             downloadBtn.href = currentEl.href;
             // Current type is not image or video...
-            if (currentType !== 'image' && currentType !== 'video') {
+            /*if (currentType !== 'image' && currentType !== 'video') {
                 // ...so remove download button from the DOM
-                //dimboxContainer.removeChild(downloadBtn);
                 dimboxButtons.removeChild(downloadBtn);
                 downloadBtn = null;
-            }
-        } else if (currentType === 'image' || currentType === 'video') {
+            }*/
+        } else {
             // Download button does not exits yet, create it
             downloadBtn = document.createElement('a');
             downloadBtn.className = 'dimbox-btn-download';
             downloadBtn.innerHTML = config.svgDownloadButton;
             downloadBtn.href = currentEl.href;
             downloadBtn.target = '_blank';
+
+            if (currentEl.dataset.dimboxDownloadFile) {
+                downloadBtn.href = currentEl.dataset.dimboxDownloadFile;
+            }
+
             downloadBtn.setAttribute('download', '');
             downloadBtn.addEventListener('click', function(e) {
                 if (! currentEl.href.includes(window.location.hostname) && ! currentEl.dataset.dimboxDownloadFailed) {
                     // The image is in a different domain
                     e.preventDefault();
-                    downloadRemoteImage();
+                    downloadRemoteFile();
                 }
                 executeCallback('onDownload');
             });
 
-            //dimboxContainer.appendChild(downloadBtn);
             dimboxButtons.appendChild(downloadBtn);
         }
     }
 
     /**
-     * Starts remote image download if CORS policy allows.
-     * If not, the image is opened in a new tab. 
+     * Starts remote file download if CORS policy allows.
+     * If not, the file is opened in a new tab. 
      */
-    function downloadRemoteImage() {
+    function downloadRemoteFile() {
         let url = currentEl.href;
+
+        if (currentEl.dataset.dimboxDownloadFile) {
+            url = currentEl.dataset.dimboxDownloadFile;
+        }
+
         let fileName = url.match(/([^\/]+)$/)[1];
         fetch(url)
             .then(function(response) {
