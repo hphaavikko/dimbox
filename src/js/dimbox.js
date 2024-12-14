@@ -284,7 +284,7 @@ const dimbox = (function() {
      * 
      */
     function updateContent() {
-        executeCallback('onBeforeUpdateContent');
+        executeCallback('onBeforeUpdateContent', currentEl);
         if (currentType == 'image') {
             updateImageContent();
         } else if (currentType == 'video') {
@@ -298,7 +298,7 @@ const dimbox = (function() {
         }
         updateSequence();
         updateDownloadButton();
-        executeCallback('onAfterUpdateContent');
+        executeCallback('onAfterUpdateContent', currentEl);
     }
 
     /**
@@ -515,7 +515,7 @@ const dimbox = (function() {
      */
     function onContentLoaded() {
         dimboxContainer.classList.add('dimbox-loaded');
-        executeCallback('onContentLoaded');
+        executeCallback('onContentLoaded', currentEl);
     }
 
     /**
@@ -818,8 +818,11 @@ const dimbox = (function() {
     /**
      * @param   {string}    cbName 
      */
-    function executeCallback(cbName) {
+    function executeCallback(cbName, params) {
         if (typeof config[cbName] === "function") {
+            if (params) {
+                return config[cbName](params);
+            }
             return config[cbName]();
         }
     }

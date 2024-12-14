@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.4] - 2024-12-14
+### Added
+- Parameter currentEl to callback function calls onBeforeUpdateContent, onAfterUpdateContent and onContentLoaded.
+
 ## [1.1.3] - 2024-11-16
 ### Added
 - Data attribute data-dimbox-download-file.
