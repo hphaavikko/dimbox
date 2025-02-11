@@ -1,6 +1,6 @@
 # DimBox
 
-Lightweight and dependency free JavaScript library for displaying images, videos and other content on a web page.
+Lightweight, accessible and dependency free JavaScript library for displaying images, videos and other content on a web page.
 
 ## Getting Started
 
