@@ -1,8 +1,8 @@
 /**
- * DimBox - Lightweight and dependency free JavaScript library for displaying images, videos and other content on a web page.
+ * DimBox - Lightweight, accessible and dependency free JavaScript library for displaying images, videos and other content on a web page.
  * https://github.com/hphaavikko/dimbox
  * 
- * @version 1.1.3
+ * @version 1.2.0
  * @author  Hape Haavikko <hape.haavikko@fakiirimedia.com>
  * @licence ISC
  */
@@ -60,8 +60,11 @@ const dimbox = (function() {
         svgDownloadButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>',
         svgFullscreenButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5"/></svg>',
         svgFullscreenExitButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5.5 0a.5.5 0 0 1 .5.5v4A1.5 1.5 0 0 1 4.5 6h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5m5 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 10 4.5v-4a.5.5 0 0 1 .5-.5M0 10.5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 6 11.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5m10 1a1.5 1.5 0 0 1 1.5-1.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0z"/></svg>',
+        svgImageIcon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16"><path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/><path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1z"/></svg>',
         svgPrevNextButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>',
+        svgVideoIcon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16"><path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/></svg>',
         theme: 'dark',
+        thumbnails: false,
         videoAutoplay: true,
         videoControls: true,
         videoLoop: false,
@@ -85,6 +88,7 @@ const dimbox = (function() {
     let dimboxContainer;
     let dimboxContent;
     let dimboxButtons;
+    let dimboxThumbnails;
     let loader;
     let closeBtn;
     let downloadBtn;
@@ -92,6 +96,7 @@ const dimbox = (function() {
     let thisGalleryLinks;
     let currentEl;
     let currentType;
+    let jumpToIndex;
     let focusableEls;
     let prevFocusedElement;
     let currentFocus;
@@ -183,10 +188,70 @@ const dimbox = (function() {
             if (galleryLinks.length > 1) {
                 createPrevNextButtons(currentEl.dataset.dimbox);
                 createSequence();
+
+                // Create thumbnails if needed
+                if (config.thumbnails) {
+                    dimboxContainer.classList.add('has-thumbnails');
+                    dimboxThumbnails = document.createElement('div');
+                    dimboxThumbnails.classList.add('dimbox-thumbnails');
+
+                    for (let i = 0; i < galleryLinks.length; i++) {
+                        let galleryLink = galleryLinks[i];
+                        let tnA = document.createElement('a');
+                        let tnImg;
+
+                        tnA.dataset.dimboxIndex = i;
+                        tnImg = document.createElement('img');
+                        tnImg.dataset.dimboxIndex = i;
+
+                        if (galleryLink.dataset.dimboxThumbnail) {
+                            // Custom thumbnail image set via data attribute
+                            tnImg.src = galleryLink.dataset.dimboxThumbnail;
+                        } else {
+                            // No custom thumbnail, get link img if there is one
+                            for (let j = 0; j < galleryLink.children.length; j++) {
+                                let child = galleryLink.children[j];
+                                if (child.tagName === 'IMG') {
+                                    tnImg.src = child.src;
+                                    break;
+                                }
+                            }
+                        }
+
+                        tnA.href = galleryLinks[getCurrentIndex()].href;
+                            
+                        tnA.addEventListener('click', thumbnailClick);
+                        tnA.addEventListener('focus', thumbnailFocus);
+
+                        if (tnImg.src) {
+                            tnA.appendChild(tnImg);
+                        } else {
+                            // No thumbnail img element found in link, create placeholder tn
+                            switch (detectType(galleryLink)) {
+                                case 'image':
+                                    tnA.innerHTML = config.svgImageIcon;
+                                    break;
+                                case 'video':
+                                    tnA.innerHTML = config.svgVideoIcon;
+                                    break;
+                                default: 
+                                    tnA.textContent = '?';
+                                    break;
+                            }
+                        }
+
+                        dimboxThumbnails.appendChild(tnA);
+                        dimboxContainer.appendChild(dimboxThumbnails);
+                    }
+                }
+
                 window.addEventListener('keydown', handleArrowsPress);
                 window.addEventListener('touchstart', onTouchStart);
                 window.addEventListener('touchend', onTouchEnd);
+                
                 dimboxContainer.classList.add('dimbox-gallery');
+
+                //updateActiveThumbnail();
             }
         }
 
@@ -201,7 +266,6 @@ const dimbox = (function() {
             dimboxButtons.appendChild(fullscreenBtn);
         }
 
-        //dimboxContainer.appendChild(closeBtn);
         dimboxButtons.appendChild(closeBtn);
 
         dimboxContainer.appendChild(dimboxButtons);
@@ -209,6 +273,7 @@ const dimbox = (function() {
         
         closeBtn.addEventListener('click', close);
         dimboxContainer.addEventListener('click', onOverlayClick);
+
         document.body.appendChild(dimboxContainer);
 
         // Get focusable elements in DimBox container
@@ -392,6 +457,65 @@ const dimbox = (function() {
     /**
      * 
      */
+    function resetThumbnails() {
+        if (config.thumbnails) {
+            // Remove current classes from all thumbnails
+            for (let i = 0; i < dimboxThumbnails.children.length; i++) {
+                dimboxThumbnails.children[i].classList.remove('current');
+            }
+        }
+    }
+
+    /**
+     * 
+     */
+    function updateActiveThumbnail() {
+        if (config.thumbnails) {
+            // Add current class to the current thumbnail
+            const currentTn = dimboxThumbnails.children[getCurrentIndex()];
+            currentTn.classList.add('current');
+            // Move thumbnails so that current thumbnail is always in the center
+            const currentTnOffsetLeft = currentTn.offsetLeft;
+            dimboxThumbnails.style.marginLeft = -((currentTn.offsetWidth / 2) + currentTnOffsetLeft) + 'px';
+        }
+    }
+
+    /**
+     * 
+     */
+    function thumbnailClick(e) {
+        e.preventDefault();
+        jumpToIndex = e.target.dataset.dimboxIndex;
+        if (jumpToIndex > getCurrentIndex()) {
+            prevNext(1);
+        } else if (jumpToIndex < getCurrentIndex()) {
+            prevNext(-1);
+        }
+    }
+
+    /**
+     * 
+     */
+    function thumbnailFocus(e) {
+        // Check if thumbnail is out of viewport on focus
+        // and move thumbnails so that the focused element
+        // is fully visible in the viewport.
+        const rect = e.target.getBoundingClientRect();
+        const currentMargin = parseInt(dimboxThumbnails.style.marginLeft);
+        const tnWidth = e.target.offsetWidth;
+
+        if (rect.left <= 0) {
+            // Thumbnail is out of the left side of the viewport, move thumbs right
+            dimboxThumbnails.style.marginLeft = currentMargin + (tnWidth*2) + 'px';
+        } else if (rect.right >= window.innerWidth) {
+            // Thumbnail is out of the right side of the viewport, move thumbs left
+            dimboxThumbnails.style.marginLeft = currentMargin - (tnWidth*2) + 'px';
+        }
+    }
+
+    /**
+     * 
+     */
     function updateDownloadButton() {
         if (! config.showDownloadButton) {
             return;
@@ -515,6 +639,7 @@ const dimbox = (function() {
      */
     function onContentLoaded() {
         dimboxContainer.classList.add('dimbox-loaded');
+        updateActiveThumbnail();
         executeCallback('onContentLoaded', currentEl);
     }
 
@@ -555,7 +680,8 @@ const dimbox = (function() {
         } else {
             dimboxContent.addEventListener('transitionend', transitionRight);
             dimboxContent.classList.add('dimbox-transition-right');
-        } 
+        }
+        resetThumbnails();
     }
 
     /**
@@ -563,7 +689,13 @@ const dimbox = (function() {
      */
     function transitionLeft() {
         let index = getCurrentIndex() + 1;
-        index = getStartOverIndex(index);
+        
+        if (jumpToIndex) {
+            index = getStartOverIndex(jumpToIndex);
+        } else {
+            index = getStartOverIndex(index);
+        }
+
         dimboxContent.classList.remove('dimbox-transition-left');
         dimboxContent.classList.remove('dimbox-transition-right');
         dimboxContent.removeEventListener('transitionend', transitionLeft)
@@ -571,6 +703,8 @@ const dimbox = (function() {
         currentType = getCurrentType(currentEl);
         dimboxContainer.classList.remove('dimbox-loaded');
         updateContent();
+        updateActiveThumbnail();
+        jumpToIndex = null;
     }
 
     /**
@@ -578,7 +712,13 @@ const dimbox = (function() {
      */
     function transitionRight() {
         let index = getCurrentIndex() - 1;
-        index = getStartOverIndex(index);
+
+         if (jumpToIndex) {
+            index = getStartOverIndex(jumpToIndex);
+        } else {
+            index = getStartOverIndex(index);
+        }
+
         dimboxContent.classList.remove('dimbox-transition-left');
         dimboxContent.classList.remove('dimbox-transition-right');
         dimboxContent.removeEventListener('transitionend', transitionRight)
@@ -586,6 +726,8 @@ const dimbox = (function() {
         currentType = getCurrentType(currentEl);
         dimboxContainer.classList.remove('dimbox-loaded');
         updateContent();
+        updateActiveThumbnail();
+        jumpToIndex = null;
     }
 
     /**

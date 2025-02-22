@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.0] - 2025-02-17
+### Added
+- Config option thumbnails.
+- Config option svgImageIcon.
+- Config option svgVideoIcon.
+- Data attribute data-dimbox-thumbnail.
+
 ## [1.1.4] - 2024-12-14
 ### Added
 - Parameter currentEl to callback function calls onBeforeUpdateContent, onAfterUpdateContent and onContentLoaded.

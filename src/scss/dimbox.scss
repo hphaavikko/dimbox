@@ -1,6 +1,14 @@
 $overlay-color-dark: #000 !default;
 $overlay-color-light: #fff !default;
 $overlay-opacity: .75 !default;
+$thumbnailActiveOutline: 3px solid #fff !default;
+$thubmnailAspectRatio: 1 !default;
+$thumbnailBackgroundColor: #000 !default;
+$thumbnailBorderRadius: .25rem !default;
+$thumbnailColor: #fff !default;
+$thumbnailIconWidth: 2rem !default;
+$thumbnailIconHeight: 2rem !default;
+$thumbnailHeight: 60px !default;
 
 .dimbox-container {
     position: fixed;
@@ -53,7 +61,14 @@ $overlay-opacity: .75 !default;
 .dimbox-container *:focus,
 .dimbox-container *:focus-visible {
     outline-style: dotted;
+    outline-color: #fff;
     outline-offset: 4px;
+}
+
+.dimbox-container.dimbox-light *:active,
+.dimbox-container.dimbox-light *:focus,
+.dimbox-container.dimbox-light *:focus-visible {
+    outline-color: #000;
 }
 
 .dimbox-loader {
@@ -121,7 +136,6 @@ $overlay-opacity: .75 !default;
     order: 3;
 }
 
-
 [class^="dimbox-btn"]:hover,
 [class^="dimbox-btn"]:active,
 [class^="dimbox-btn"]:focus {
@@ -161,6 +175,65 @@ $overlay-opacity: .75 !default;
     left: 16px;
 }
 
+.dimbox-thumbnails {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    transition: margin-left .5s;
+}
+
+.dimbox-thumbnails a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $thumbnailBackgroundColor;
+    color: $thumbnailColor;
+    text-decoration: none;
+    height: $thumbnailHeight;
+    aspect-ratio: $thubmnailAspectRatio;
+    border-radius: $thumbnailBorderRadius;
+    overflow: hidden;
+    margin-left: 1rem;
+}
+
+.dimbox-thumbnails a:first-child {
+    margin-left: 0;
+}
+
+.dimbox-thumbnails img,
+.dimbox-thumbnails svg {
+    height: $thumbnailHeight;
+    aspect-ratio: $thubmnailAspectRatio;
+    object-fit: cover;
+    //opacity: .5;
+}
+
+.dimbox-thumbnails svg {
+    width: $thumbnailIconWidth;
+    height: $thumbnailIconHeight;
+}
+
+.dimbox-thumbnails > a.current {
+    outline: $thumbnailActiveOutline;
+    outline-offset: 0;
+}
+
+.dimbox-thumbnails > a.current:active,
+.dimbox-thumbnails > a.current:focus,
+.dimbox-thumbnails > a.current:focus-visible {
+    outline-width: 1px;
+    outline-style: dotted;
+    outline-color: #fff;
+    outline-offset: 4px;
+}
+
+.dimbox-thumbnails > a.current img,
+.dimbox-thumbnails > a.current svg {
+    opacity: 1;
+}
+
 .dimbox-content {
     position: relative;
     max-height: 100%;
@@ -198,6 +271,13 @@ $overlay-opacity: .75 !default;
     align-items: center;
     max-height: calc(100vh - 88px);
     transition: width .5s, height .5s;
+}
+
+.dimbox-container.has-thumbnails .dimbox-figure,
+.dimbox-container.has-thumbnails .dimbox-video-container,
+.dimbox-container.has-thumbnails .dimbox-iframe-container {
+    max-height: calc(100vh - 88px - $thumbnailHeight);
+    margin-top: calc(0px - $thumbnailHeight / 2);
 }
 
 .dimbox-iframe-container {
@@ -311,6 +391,10 @@ $overlay-opacity: .75 !default;
     .dimbox-btn-next {
         top: auto;
         bottom: 0;
+    }
+    .dimbox-container.has-thumbnails .dimbox-btn-prev,
+    .dimbox-container.has-thumbnails .dimbox-btn-next {
+        bottom: calc($thumbnailHeight + 8px);
     }
 }
 
