@@ -524,6 +524,10 @@ const dimbox = (function() {
         if (dimboxContainer.querySelector('.dimbox-btn-download')) {
             // Update href right away
             downloadBtn.href = currentEl.href;
+            // Check if separate download file is defined
+            if (currentEl.dataset.dimboxDownloadFile) {
+                downloadBtn.href = currentEl.dataset.dimboxDownloadFile;
+            }
             // Current type is not image or video...
             /*if (currentType !== 'image' && currentType !== 'video') {
                 // ...so remove download button from the DOM

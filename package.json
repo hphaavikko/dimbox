@@ -1,6 +1,6 @@
 {
   "name": "dimbox",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Lightweight, accessible and dependency free JavaScript library for displaying images, videos and other content on a web page.",
   "main": "src/js/dimbox.js",
   "scripts": {
