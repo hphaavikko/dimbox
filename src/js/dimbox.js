@@ -277,11 +277,7 @@ const dimbox = (function() {
         document.body.appendChild(dimboxContainer);
 
         // Get focusable elements in DimBox container
-        focusableEls = Array.from(
-            dimboxContainer.querySelectorAll(
-              'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
-            )
-        );
+        focusableEls = getFocusables();
 
         // Get the currently focused element
         prevFocusedElement = document.activeElement;
@@ -326,6 +322,10 @@ const dimbox = (function() {
     function trapFocus(e) {
         e.preventDefault();
         
+        // Refresh focusable elements list since box content might have been
+        // changed since opening the box (for example with ajax content)
+        focusableEls = getFocusables();
+        
         let firstFocusableEl = focusableEls[0];
         let lastFocusableEl = focusableEls[focusableEls.length - 1];
 
@@ -343,6 +343,19 @@ const dimbox = (function() {
             }
             currentFocus = document.activeElement;
         }
+    }
+
+    /**
+     * Get focusable elements in DimBox container.
+     * 
+     * @returns {array}
+     */
+    function getFocusables() {
+         return Array.from(
+            dimboxContainer.querySelectorAll(
+              'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
+            )
+        );
     }
 
     /**

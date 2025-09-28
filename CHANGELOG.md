@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.2] - 2025-09-28
+### Added
+- Refresh focusable elements list on focus change
+
 ## [1.2.1] - 2025-06-05
 ### Fixed
 - Bug that caused data-dimbox-download-file attribute not to work in galleries except for the first opened image.
