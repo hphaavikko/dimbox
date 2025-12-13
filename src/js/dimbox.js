@@ -412,6 +412,7 @@ const dimbox = (function() {
         dimboxContent.innerHTML = contentHtml;
         let videoEl = dimboxContent.querySelector('video');
         videoEl.addEventListener('canplay', onContentLoaded);
+
         if (config.videoControls) {
             videoEl.setAttribute('controls', '');
         }
@@ -424,6 +425,19 @@ const dimbox = (function() {
         if (config.videoLoop) {
             videoEl.setAttribute('loop', '');
         }
+
+        // Set video aria-label
+        if (currentEl.getAttribute('aria-label')) {
+            // Link aria-label defined, use that for video element too
+            videoEl.setAttribute('aria-label', currentEl.getAttribute('aria-label'));
+        } else if (currentEl.dataset.dimboxCaption) {
+            // No aria-label defined but dimbox-caption set, use that
+            videoEl.setAttribute('aria-label', currentEl.dataset.dimboxCaption);
+        } else if (currentEl.querySelector('img') && currentEl.querySelector('img').getAttribute('alt')) {
+            // No aria-label or dimbox-caption but img alt is set, use that
+            videoEl.setAttribute('aria-label', currentEl.querySelector('img').getAttribute('alt'));
+        }
+
         videoEl.setAttribute('playsinline', '');
     }
 
