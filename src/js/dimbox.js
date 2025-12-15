@@ -427,16 +427,7 @@ const dimbox = (function() {
         }
 
         // Set video aria-label
-        if (currentEl.getAttribute('aria-label')) {
-            // Link aria-label defined, use that for video element too
-            videoEl.setAttribute('aria-label', currentEl.getAttribute('aria-label'));
-        } else if (currentEl.dataset.dimboxCaption) {
-            // No aria-label defined but dimbox-caption set, use that
-            videoEl.setAttribute('aria-label', currentEl.dataset.dimboxCaption);
-        } else if (currentEl.querySelector('img') && currentEl.querySelector('img').getAttribute('alt')) {
-            // No aria-label or dimbox-caption but img alt is set, use that
-            videoEl.setAttribute('aria-label', currentEl.querySelector('img').getAttribute('alt'));
-        }
+        setAriaLabel(videoEl);
 
         videoEl.setAttribute('playsinline', '');
     }
@@ -450,11 +441,21 @@ const dimbox = (function() {
         contentHtml = insertCaption(contentHtml);
         dimboxContent.innerHTML = contentHtml;
         let ratio = config.iframeRatio;
+        
         if (currentEl.dataset.dimboxRatio) {
             ratio = currentEl.dataset.dimboxRatio;
         }
-        dimboxContent.querySelector('iframe').classList.add('ratio-' + ratio);
-        dimboxContent.querySelector('iframe').addEventListener('load', onContentLoaded);
+
+        const iFrameEl = dimboxContent.querySelector('iframe');
+
+        setAriaLabel(iFrameEl);
+
+        if (iFrameEl.getAttribute('aria-label')) {
+            iFrameEl.title = iFrameEl.getAttribute('aria-label');
+        }
+
+        iFrameEl.classList.add('ratio-' + ratio);
+        iFrameEl.addEventListener('load', onContentLoaded);
     }
 
     /**
@@ -496,14 +497,35 @@ const dimbox = (function() {
     /**
      * 
      */
+    function setAriaLabel(el) {
+        if (currentEl.getAttribute('aria-label')) {
+            // Link aria-label defined, use that for video element too
+            el.setAttribute('aria-label', currentEl.getAttribute('aria-label'));
+        } else if (currentEl.dataset.dimboxCaption) {
+            // No aria-label defined but dimbox-caption set, use that
+            el.setAttribute('aria-label', currentEl.dataset.dimboxCaption);
+        } else if (currentEl.querySelector('img') && currentEl.querySelector('img').getAttribute('alt')) {
+            // No aria-label or dimbox-caption but img alt is set, use that
+            el.setAttribute('aria-label', currentEl.querySelector('img').getAttribute('alt'));
+        }
+    }
+
+    /**
+     * 
+     */
     function updateActiveThumbnail() {
-        if (config.thumbnails) {
+        if (config.thumbnails && dimboxThumbnails && dimboxThumbnails.children) {
             // Add current class to the current thumbnail
             const currentTn = dimboxThumbnails.children[getCurrentIndex()];
-            currentTn.classList.add('current');
-            // Move thumbnails so that current thumbnail is always in the center
-            const currentTnOffsetLeft = currentTn.offsetLeft;
-            dimboxThumbnails.style.marginLeft = -((currentTn.offsetWidth / 2) + currentTnOffsetLeft) + 'px';
+            // Yes, we have to check that currentTn exists
+            // Otherwise this could lead to an error in a case where a previous
+            // gallery had thumbnails but the one opened after it doesn't
+            if (currentTn) {
+                currentTn.classList.add('current');
+                // Move thumbnails so that current thumbnail is always in the center
+                const currentTnOffsetLeft = currentTn.offsetLeft;
+                dimboxThumbnails.style.marginLeft = -((currentTn.offsetWidth / 2) + currentTnOffsetLeft) + 'px';
+            }
         }
     }
 
