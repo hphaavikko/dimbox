@@ -56,12 +56,15 @@ const dimbox = (function() {
         sequenceTemplate: '<span class="dimbox-sequence-current">{{current}}</span> / <span class="dimbox-sequence-total">{{total}}</span>',
         showDownloadButton: true,
         showFullscreenButton: true,
+        showThumbnailsButton: false,
         svgCloseButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/></svg>',
         svgDownloadButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>',
         svgFullscreenButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5"/></svg>',
         svgFullscreenExitButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5.5 0a.5.5 0 0 1 .5.5v4A1.5 1.5 0 0 1 4.5 6h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5m5 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 10 4.5v-4a.5.5 0 0 1 .5-.5M0 10.5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 6 11.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5m10 1a1.5 1.5 0 0 1 1.5-1.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0z"/></svg>',
         svgImageIcon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16"><path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/><path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1z"/></svg>',
         svgPrevNextButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>',
+        svgThumbnailsOffButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M6.58,3.94c0,.72-.59,1.31-1.31,1.31s-1.31-.59-1.31-1.31.59-1.31,1.31-1.31,1.31.59,1.31,1.31"/><path d="M2.75,0c-.97,0-1.75.78-1.75,1.75v8.75c0,.97.78,1.75,1.75,1.75h10.5c.97,0,1.75-.78,1.75-1.75V1.75c0-.97-.78-1.75-1.75-1.75H2.75ZM13.25.88c.48,0,.88.39.88.88v5.69l-3.3-1.7c-.17-.08-.37-.05-.5.08l-3.25,3.25-2.33-1.55c-.17-.12-.4-.09-.55.05l-2.32,2.06V1.75c0-.48.39-.88.87-.88h10.5Z"/><path d="M1.07,13.07c.09-.09.22-.09.3,0h0l1.13,1.13,1.13-1.13c.09-.09.22-.09.3,0,.07.09.09.22,0,.3l-1.13,1.13,1.13,1.13c.09.09.09.22,0,.3s-.22.09-.3,0l-1.13-1.13-1.13,1.13c-.09.09-.22.09-.3,0s-.09-.22,0-.3l1.13-1.13-1.13-1.13c-.09-.09-.09-.22,0-.3h0"/><path d="M4.73,13.07c.09-.09.22-.09.3,0h0l1.13,1.13,1.13-1.13c.09-.09.22-.09.3,0,.07.09.09.22,0,.3l-1.13,1.13,1.13,1.13c.09.09.09.22,0,.3s-.22.09-.3,0l-1.13-1.13-1.13,1.13c-.09.09-.22.09-.3,0s-.09-.22,0-.3l1.13-1.13-1.13-1.13c-.09-.09-.09-.22,0-.3h0"/><path d="M8.4,13.07c.09-.09.22-.09.3,0h0l1.13,1.13,1.13-1.13c.09-.09.22-.09.3,0,.07.09.09.22,0,.3l-1.13,1.13,1.13,1.13c.09.09.09.22,0,.3s-.22.09-.3,0l-1.13-1.13-1.13,1.13c-.09.09-.22.09-.3,0s-.09-.22,0-.3l1.13-1.13-1.13-1.13c-.09-.09-.09-.22,0-.3h0"/><path d="M12.07,13.07c.09-.09.22-.09.3,0h0l1.13,1.13,1.13-1.13c.09-.09.22-.09.3,0,.07.09.09.22,0,.3l-1.13,1.13,1.13,1.13c.09.09.09.22,0,.3s-.22.09-.3,0l-1.13-1.13-1.13,1.13c-.09.09-.22.09-.3,0s-.09-.22,0-.3l1.13-1.13-1.13-1.13c-.09-.09-.09-.22,0-.3h0"/></svg>',
+        svgThumbnailsOnButton: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M3.25,13h-1.5c-.41,0-.75.34-.75.75v1.5c0,.41.34.75.75.75h1.5c.41,0,.75-.34.75-.75v-1.5c0-.41-.34-.75-.75-.75ZM3.25,15.25h-1.5v-1.5h1.5v1.5Z"/><path d="M6.92,13h-1.5c-.41,0-.75.34-.75.75v1.5c0,.41.34.75.75.75h1.5c.41,0,.75-.34.75-.75v-1.5c0-.41-.34-.75-.75-.75ZM6.92,15.25h-1.5v-1.5h1.5v1.5Z"/><path d="M10.58,13h-1.5c-.41,0-.75.34-.75.75v1.5c0,.41.34.75.75.75h1.5c.41,0,.75-.34.75-.75v-1.5c0-.41-.34-.75-.75-.75ZM10.58,15.25h-1.5v-1.5h1.5v1.5Z"/><path d="M14.25,13h-1.5c-.41,0-.75.34-.75.75v1.5c0,.41.34.75.75.75h1.5c.41,0,.75-.34.75-.75v-1.5c0-.41-.34-.75-.75-.75ZM14.25,15.25h-1.5v-1.5h1.5v1.5Z"/><path d="M6.58,3.94c0,.72-.59,1.31-1.31,1.31s-1.31-.59-1.31-1.31.59-1.31,1.31-1.31,1.31.59,1.31,1.31"/><path d="M2.75,0c-.97,0-1.75.78-1.75,1.75v8.75c0,.97.78,1.75,1.75,1.75h10.5c.97,0,1.75-.78,1.75-1.75V1.75c0-.97-.78-1.75-1.75-1.75H2.75ZM13.25.88c.48,0,.88.39.88.88v5.69l-3.3-1.7c-.17-.08-.37-.05-.5.08l-3.25,3.25-2.33-1.55c-.17-.12-.4-.09-.55.05l-2.32,2.06V1.75c0-.48.39-.88.87-.88h10.5Z"/></svg>',
         svgVideoIcon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16"><path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/></svg>',
         theme: 'dark',
         thumbnails: false,
@@ -93,6 +96,7 @@ const dimbox = (function() {
     let closeBtn;
     let downloadBtn;
     let fullscreenBtn;
+    let thumbnailsBtn;
     let thisGalleryLinks;
     let currentEl;
     let currentType;
@@ -180,20 +184,33 @@ const dimbox = (function() {
         updateContent();
         window.addEventListener('keydown', handleEscPress);
 
+        let showThumbnailsOnInit = config.thumbnails;
+        let galleryLinks = null;
+
         // Set up gallery stuff
         if (currentEl.dataset.dimbox !== '') {
             // Check if there are any other items in the same gallery
-            let galleryLinks = document.querySelectorAll('[data-dimbox="' + currentEl.dataset.dimbox + '"]');
+            galleryLinks = document.querySelectorAll('[data-dimbox="' + currentEl.dataset.dimbox + '"]');
             // Set up prev/next buttons and sequence element if more than one item
             if (galleryLinks.length > 1) {
                 createPrevNextButtons(currentEl.dataset.dimbox);
                 createSequence();
+
+                // Set config.thumbnails always true if thumbnail button is shown
+                if (config.showThumbnailsButton) {
+                    config.thumbnails = true;
+                }
 
                 // Create thumbnails if needed
                 if (config.thumbnails) {
                     dimboxContainer.classList.add('has-thumbnails');
                     dimboxThumbnails = document.createElement('div');
                     dimboxThumbnails.classList.add('dimbox-thumbnails');
+
+                    if (! showThumbnailsOnInit) {
+                        dimboxContainer.classList.remove('has-thumbnails');
+                        dimboxThumbnails.classList.add('dimbox-d-none');
+                    }
 
                     for (let i = 0; i < galleryLinks.length; i++) {
                         let galleryLink = galleryLinks[i];
@@ -264,6 +281,21 @@ const dimbox = (function() {
             fullscreenBtn.innerHTML = config.svgFullscreenButton;
             fullscreenBtn.addEventListener('click', toggleFullscreen);
             dimboxButtons.appendChild(fullscreenBtn);
+        }
+
+        // Create thumbnails button if needed
+        if (config.showThumbnailsButton && config.thumbnails && galleryLinks && galleryLinks.length > 1) {
+            thumbnailsBtn = document.createElement('button');
+            thumbnailsBtn.className = 'dimbox-btn-thumbnails';
+            
+            if (showThumbnailsOnInit) {
+                thumbnailsBtn.innerHTML = config.svgThumbnailsOffButton;
+            } else {
+                thumbnailsBtn.innerHTML = config.svgThumbnailsOnButton;
+            }
+            
+            thumbnailsBtn.addEventListener('click', toggleThumbnails);
+            dimboxButtons.appendChild(thumbnailsBtn);
         }
 
         dimboxButtons.appendChild(closeBtn);
@@ -643,6 +675,25 @@ const dimbox = (function() {
                 downloadBtn.click();
             });
     }
+
+    /**
+     * 
+     */
+    function toggleThumbnails() {
+        if (dimboxContainer.classList.contains('has-thumbnails')) {
+            dimboxContainer.classList.remove('has-thumbnails');
+            dimboxThumbnails.classList.add('dimbox-d-none');
+            thumbnailsBtn.innerHTML = config.svgThumbnailsOnButton;
+        } else {
+            dimboxContainer.classList.add('has-thumbnails');
+            dimboxThumbnails.classList.remove('dimbox-d-none');
+            thumbnailsBtn.innerHTML = config.svgThumbnailsOffButton;
+            updateActiveThumbnail();
+        }
+
+        thumbnailsBtn.blur();
+    }
+
     /**
      * 
      */

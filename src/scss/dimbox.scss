@@ -365,6 +365,10 @@ $thumbnailHeight: 60px !default;
     position: relative;
 }
 
+.dimbox-d-none {
+    display: none !important;
+}
+
 @media (orientation: portrait) {
     .dimbox-container {
         padding: 56px 16px;

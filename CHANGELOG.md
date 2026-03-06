@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0] - 2026-03-06
+### Added
+- Option for showing toggle thumbnails button
+- Options for toggle thumbnails button icons
+
 ## [1.2.4] - 2025-12-15
 ### Added
 - Title and aria-label attributes for iframe
