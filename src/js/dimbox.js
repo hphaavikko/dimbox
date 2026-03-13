@@ -2,7 +2,7 @@
  * DimBox - Lightweight, accessible and dependency free JavaScript library for displaying images, videos and other content on a web page.
  * https://github.com/hphaavikko/dimbox
  * 
- * @version 1.2.0
+ * @version 1.3.1
  * @author  Hape Haavikko <hape.haavikko@fakiirimedia.com>
  * @licence ISC
  */
@@ -68,6 +68,7 @@ const dimbox = (function() {
         svgVideoIcon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16"><path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/></svg>',
         theme: 'dark',
         thumbnails: false,
+        thumbnailsInitState: true,
         videoAutoplay: true,
         videoControls: true,
         videoLoop: false,
@@ -184,7 +185,6 @@ const dimbox = (function() {
         updateContent();
         window.addEventListener('keydown', handleEscPress);
 
-        let showThumbnailsOnInit = config.thumbnails;
         let galleryLinks = null;
 
         // Set up gallery stuff
@@ -207,7 +207,7 @@ const dimbox = (function() {
                     dimboxThumbnails = document.createElement('div');
                     dimboxThumbnails.classList.add('dimbox-thumbnails');
 
-                    if (! showThumbnailsOnInit) {
+                    if (! config.thumbnailsInitState) {
                         dimboxContainer.classList.remove('has-thumbnails');
                         dimboxThumbnails.classList.add('dimbox-d-none');
                     }
@@ -288,7 +288,7 @@ const dimbox = (function() {
             thumbnailsBtn = document.createElement('button');
             thumbnailsBtn.className = 'dimbox-btn-thumbnails';
             
-            if (showThumbnailsOnInit) {
+            if (config.thumbnailsInitState) {
                 thumbnailsBtn.innerHTML = config.svgThumbnailsOffButton;
             } else {
                 thumbnailsBtn.innerHTML = config.svgThumbnailsOnButton;
@@ -684,10 +684,12 @@ const dimbox = (function() {
             dimboxContainer.classList.remove('has-thumbnails');
             dimboxThumbnails.classList.add('dimbox-d-none');
             thumbnailsBtn.innerHTML = config.svgThumbnailsOnButton;
+            config.thumbnailsInitState = false;
         } else {
             dimboxContainer.classList.add('has-thumbnails');
             dimboxThumbnails.classList.remove('dimbox-d-none');
             thumbnailsBtn.innerHTML = config.svgThumbnailsOffButton;
+            config.thumbnailsInitState = true;
             updateActiveThumbnail();
         }
 

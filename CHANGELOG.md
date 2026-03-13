@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.1] - 2026-03-13
+### Fixed
+- Bug causing thumbnails to appear always on init after reopening if showThumbnailsButton was set to true
+
 ## [1.3.0] - 2026-03-06
 ### Added
 - Option for showing toggle thumbnails button
